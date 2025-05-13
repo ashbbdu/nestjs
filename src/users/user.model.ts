@@ -3,18 +3,44 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 @Table
 export class User extends Model {
   @Column
-  declare firstName: string;
+  declare first_name: string;
 
   @Column
-  declare lastName: string;
+  declare last_name: string;
 
   @Column({
-    type : DataType.STRING,
-    unique : true
+    type: DataType.STRING,
+    unique: true,
+    allowNull: false,
   })
-  declare email : string
-  
+  declare email: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [6, 200],
+        msg: 'Passoword must be between 6 and 20 characters',
+      },
+      notNull: { msg: 'Password is required' },
+    },
+  })
+  declare password: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [2, 10],
+        msg: 'User code must be between 2 and 20 characters',
+      },
+      notNull: { msg: 'User Code is required' },
+    },
+  })
+  user_code: string;
 
   @Column({ defaultValue: true })
-  declare isActive: boolean;
+  declare is_active: boolean;
 }

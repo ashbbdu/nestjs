@@ -14,7 +14,7 @@ import { UsersService } from './users/users.service';
       port: 3306,
       username: 'root',
       password: 'ash@Compunnel09',
-      database: 'test-nestjs',
+      database: 'dashboard-clone',
       // entities: [],  
       synchronize: true,
       autoLoadModels: true,

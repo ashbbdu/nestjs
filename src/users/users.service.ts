@@ -33,17 +33,17 @@ export class UsersService {
 
   async createUser(data: any): Promise<CreateUserResult> {
     try {
-      const { firstName, lastName, email, isActive } = data;
-      if (!firstName || !lastName || !email || !isActive) {
-        return {
-          success: false,
-          message: messages.REQUIRED_FIELDS,
-        };
-      }
+    //   const { firstName, lastName, email, isActive } = data;
+    //   if (!firstName || !lastName || !email || !isActive) {
+    //     return {
+    //       success: false,
+    //       message: messages.REQUIRED_FIELDS,
+    //     };
+    //   }
 
       const existingUser = await User.findOne({
         where: {
-          email: email,
+          email: data.email,
         },
        
       });
