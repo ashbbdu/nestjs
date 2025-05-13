@@ -7,7 +7,10 @@ import { messages } from 'src/constants/returnMessages';
 @Injectable()
 export class UsersService {
   async getUsers(): Promise<any> {
-    const users = await User.findAll();
+    const users = await User.findAll({
+        attributes : ['firstName' , 'lastName' , 'isActive'], // this will only work if in model we use declare
+        raw : true
+    });
     return {
       success: true,
       message: 'Users fetched successfully !',
@@ -21,6 +24,7 @@ export class UsersService {
 
   async findUser(id: string): Promise<any> {
     const user = await User.findByPk(Number(id));
+    
     if (!user) {
       return 'User not found !';
     }
@@ -37,7 +41,12 @@ export class UsersService {
         };
       }
 
-      const existingUser = await User.findOne({ where: { email: email } });
+      const existingUser = await User.findOne({
+        where: {
+          email: email,
+        },
+       
+      });
       if (existingUser) {
         return {
           success: false,

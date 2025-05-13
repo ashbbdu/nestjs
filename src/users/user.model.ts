@@ -3,18 +3,18 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 @Table
 export class User extends Model {
   @Column
-  firstName: string;
+  declare firstName: string;
 
   @Column
-  lastName: string;
+  declare lastName: string;
 
   @Column({
     type : DataType.STRING,
     unique : true
   })
-  email : string
+  declare email : string
   
 
   @Column({ defaultValue: true })
-  isActive: boolean;
+  declare isActive: boolean;
 }
