@@ -1,43 +1,57 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.model';
 import { CreateUser, CreateUserResult } from 'src/interface/test';
+import { messages } from 'src/constants/returnMessages';
 // import { CreateUser, CreateUserResult } from 'src/interface/test';
 
 @Injectable()
 export class UsersService {
-    async getUsers () : Promise<any> {
-        const users = await User.findAll();
+  async getUsers(): Promise<any> {
+    const users = await User.findAll();
+    return {
+      success: true,
+      message: 'Users fetched successfully !',
+      users,
+    };
+  }
+
+  getUserDetails(): string {
+    return 'ASHISH';
+  }
+
+  async findUser(id: string): Promise<any> {
+    const user = await User.findByPk(Number(id));
+    if (!user) {
+      return 'User not found !';
+    }
+    return user;
+  }
+
+  async createUser(data: any): Promise<CreateUserResult> {
+    try {
+      const { firstName, lastName, email, isActive } = data;
+      if (!firstName || !lastName || !email || !isActive) {
         return {
-            success : true,
-            message : "Users fetched successfully !",
-            users
+          success: false,
+          message: messages.REQUIRED_FIELDS,
         };
-    }
+      }
 
-    getUserDetails () : string {
-        return "ASHISH"
-    }
+      const existingUser = await User.findOne({ where: { email: email } });
+      if (existingUser) {
+        return {
+          success: false,
+          message: messages.USER_EXIST,
+        };
+      }
+      const user = await User.create(data);
 
-   async findUser (id : string) : Promise<any> {
-        const user = await User.findByPk(Number(id));
-        if(!user) {
-            return "User not found !"
-        }
-        return user;
+      return user.dataValues;
+    } catch (error) {
+      return {
+        success: false,
+        message: messages.INTERNAL_SERVER_ERROR,
+      };
     }
-
-    async createUser (data : any) : Promise<CreateUserResult> {
-        const { firstName , lastName , isActive } = data;
-        console.log(firstName , lastName , isActive , "data");    
-        if(!firstName || !lastName || !isActive) {
-            return {
-                success : false,
-                message : "Please fill all the fields !"
-            }
-        }
-        const user = await User.create(data)
-        console.log(user.dataValues ,"user");
-        
-        return user.dataValues;
-    }
+  }
 }

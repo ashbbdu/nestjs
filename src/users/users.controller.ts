@@ -26,7 +26,7 @@ export class UsersController {
         return this.userService.createUser(user);
      } 
 
-     @Patch(':id') // checking how to use query params
+     @Patch(':id') 
      updateUser(@Param('id') id : string , @Body() user : {}) {
         return {
             id,

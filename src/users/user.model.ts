@@ -1,4 +1,4 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class User extends Model {
@@ -7,6 +7,13 @@ export class User extends Model {
 
   @Column
   lastName: string;
+
+  @Column({
+    type : DataType.STRING,
+    unique : true
+  })
+  email : string
+  
 
   @Column({ defaultValue: true })
   isActive: boolean;
