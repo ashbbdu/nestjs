@@ -8,3 +8,21 @@
     data: ShipmentRecord[];
   }
   
+
+export interface CreateUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  updatedAt: string; 
+  createdAt: string; 
+  }
+
+  interface CreateUserError {
+    success: false;
+    message: string;
+  }
+
+  type CreateUserSuccess = CreateUser;
+
+  export type CreateUserResult = CreateUserError | CreateUserSuccess;
