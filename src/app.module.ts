@@ -15,7 +15,7 @@ import { UsersService } from './users/users.service';
       username: 'root',
       password: 'ash@Compunnel09',
       database: 'test-nestjs',
-      // entities: [],
+      // entities: [],  
       synchronize: true,
       autoLoadModels: true,
       models : [User]
