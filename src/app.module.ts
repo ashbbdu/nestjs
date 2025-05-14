@@ -5,6 +5,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.model';
 import { UsersService } from './users/users.service';
+import { ShipmentsController } from './shipments/shipments.controller';
+import { ShipmentsService } from './shipments/shipments.service';
 
 @Module({
   imports: [
@@ -23,8 +25,8 @@ import { UsersService } from './users/users.service';
   
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService,],
+  controllers: [AppController, ShipmentsController],
+  providers: [AppService, ShipmentsService,],
 })
 export class AppModule {}
 

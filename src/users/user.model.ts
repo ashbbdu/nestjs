@@ -39,7 +39,7 @@ export class User extends Model {
       notNull: { msg: 'User Code is required' },
     },
   })
-  user_code: string;
+  declare user_code: string;
 
   @Column({ defaultValue: true })
   declare is_active: boolean;

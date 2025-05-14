@@ -1,4 +1,4 @@
-import { ConflictException, HttpException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConflictException, HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { User } from './user.model';
 import { CreateUser, CreateUserResult } from 'src/interface/test';
 import { messages } from 'src/constants/returnMessages';
@@ -27,7 +27,7 @@ export class UsersService {
     const user = await User.findByPk(Number(id));
     
     if (!user) {
-      return 'User not found !';
+     throw new NotFoundException("User not found !")
     }
     return user;
   }
@@ -66,6 +66,8 @@ async createUser(createUsersDto: CreateUsersDTO): Promise<CreateUserResult> {
       return user.dataValues;
 
     } catch (err) {
+        console.log(err , "errr");
+        
       // If it’s already an HttpException (e.g. our ConflictException), re-throw it
       if (err instanceof HttpException) {
         throw err;

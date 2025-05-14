@@ -1,4 +1,4 @@
-import { IsString , IsBoolean, IsNotEmpty } from "class-validator";
+import { IsString , IsBoolean, IsNotEmpty, IsEmail, min, Min, Max, MinLength, MaxLength } from "class-validator";
 
 export class CreateUsersDTO {
     @IsString({message : "First Name should be a valid string"})
@@ -6,10 +6,13 @@ export class CreateUsersDTO {
     first_name: string;
     @IsString()
     last_name: string;
-    @IsString()
+    @IsEmail()
     email: string;
     @IsString()
+    @MinLength(3)
+    @MaxLength(100)
     password: string;
+   
     @IsString()
     user_code: string;
     @IsBoolean()
