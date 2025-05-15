@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -7,9 +7,21 @@ import { User } from './users/user.model';
 import { UsersService } from './users/users.service';
 import { ShipmentsController } from './shipments/shipments.controller';
 import { ShipmentsService } from './shipments/shipments.service';
+import { Shipment } from './shipments/shipment.model';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 5,
+        },
+      ],
+    }),
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'localhost',
@@ -20,13 +32,20 @@ import { ShipmentsService } from './shipments/shipments.service';
       // entities: [],  
       synchronize: true,
       autoLoadModels: true,
-      models : [User]
+      models : [User , Shipment]
     }),
   
     UsersModule,
   ],
   controllers: [AppController, ShipmentsController],
-  providers: [AppService, ShipmentsService,],
+  providers: [AppService, ShipmentsService , {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes("users" , "shipments")
+  }
+}
 
