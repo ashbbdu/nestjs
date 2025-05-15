@@ -29,23 +29,26 @@ import { APP_GUARD } from '@nestjs/core';
       username: 'root',
       password: 'ash@Compunnel09',
       database: 'dashboard-clone',
-      // entities: [],  
+      // entities: [],
       synchronize: true,
       autoLoadModels: true,
-      models : [User , Shipment]
+      models: [User, Shipment],
     }),
-  
+
     UsersModule,
   ],
   controllers: [AppController, ShipmentsController],
-  providers: [AppService, ShipmentsService , {
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard
-  }],
+  providers: [
+    AppService,
+    ShipmentsService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes("users" , "shipments")
+    consumer.apply(LoggerMiddleware).forRoutes('users', 'shipments');
   }
 }
-

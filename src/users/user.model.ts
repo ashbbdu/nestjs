@@ -1,6 +1,10 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-@Table
+@Table({
+    tableName : "Users",
+    timestamps: true,
+    
+})
 export class User extends Model {
   @Column
   declare first_name: string;
