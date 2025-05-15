@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsString , IsBoolean, IsNotEmpty, IsEmail, min, Min, Max, MinLength, MaxLength, IsDate } from "class-validator";
+import { IsString , IsBoolean, IsNotEmpty, IsEmail, MinLength, MaxLength, IsDate, IsEnum } from "class-validator";
 
 export class CreateUsersDTO {
     @IsString({message : "First Name should be a valid string"})
@@ -21,7 +21,7 @@ export class CreateUsersDTO {
 }
 
 
-export class ShipmentGraphQuery {
+export class ShipmentGraphQueryDTO {
     @IsNotEmpty()
     @Type(() => Date)
     @IsDate({ message: 'startDate must be a valid ISO date string' })
@@ -31,4 +31,18 @@ export class ShipmentGraphQuery {
     @Type(() => Date)
     @IsDate({ message: 'endDate must be a valid ISO date string' })
     endDate: Date;
+  }
+
+
+  export class ShipmentTeusChargeableDTO {
+    @IsNotEmpty()
+    startDate : string
+    @IsNotEmpty()
+    endDate : string
+    @IsNotEmpty()
+    @IsString()
+    company : string
+    @IsNotEmpty()
+    @IsString()
+    mode : string
   }
