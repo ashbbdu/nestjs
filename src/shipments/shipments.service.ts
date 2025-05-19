@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Shipment } from './shipment.model';
 import { ShipmentTeusChargeableDTO } from 'src/users/dto/create-users-dto';
 import { col, fn } from 'sequelize';
@@ -8,6 +8,7 @@ import { InterfaceShipmentChargeableTeus } from 'src/interface/test';
 
 @Injectable()
 export class ShipmentsService {
+  private readonly logger = new Logger(ShipmentsService.name , {timestamp : true});
   async getShipments(): Promise<any> {
     const data = await Shipment.count({
       attributes: ['shipment_uid', 'Mode', 'Company'],
@@ -17,7 +18,9 @@ export class ShipmentsService {
 
   async shipmentTeusChargableData(
     shipmentTeusChargeableDto: ShipmentTeusChargeableDTO,
-  ): Promise<any> { // tomorrow check out how to will do the type thing
+  ): Promise<any> {
+    this.logger.log('Doing something...');
+    // tomorrow check out how to will do the type thing
     const { startDate, endDate, mode, company } = shipmentTeusChargeableDto;
     try {
       const data = await Shipment.findAll({
@@ -32,7 +35,7 @@ export class ShipmentsService {
         },
         group: ['carrier_name'],
         order: mode === 'FCL' ? [['TEUs', 'desc']] : [['Chargeable', 'desc']],
-        raw : true
+        raw: true,
       });
       return {
         statusCode: HttpStatus.OK,
