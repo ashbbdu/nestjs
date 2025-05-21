@@ -1,6 +1,6 @@
 import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { ShipmentsService } from './shipments.service';
-import { ShipmentGraphQueryDTO, ShipmentTeusChargeableDTO } from 'src/users/dto/create-users-dto';
+import { ShipmentGraphQueryDTO, ShipmentGraphQueryDTOFirst, ShipmentTeusChargeableDTO } from 'src/users/dto/create-users-dto';
 
 
 
@@ -14,6 +14,13 @@ export class ShipmentsController {
 
   @Get("/shipmentgraph")
   getShipmentGraphData (@Query() query: ShipmentGraphQueryDTO ) : any {
+    console.log(query, "query");
+    
+  } 
+
+
+    @Get("/shipmentgraphfirst")
+  getShipmentGraphDataFirst (@Query() query: ShipmentGraphQueryDTOFirst ) : any {
     console.log(query, "query");
     
   } 

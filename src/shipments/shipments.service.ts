@@ -26,7 +26,7 @@ export class ShipmentsService {
       const data = await Shipment.findAll({
         attributes:
           mode === 'FCL'
-            ? ['carrier_name', [fn('SUM', col('TEU')), 'TEUs']]
+            ? ['carrier_name', [fn('SUM', col('TEU')), 'TEUs']] 
             : ['carrier_name', [fn('SUM', col('Chargeable')), 'Chargeable']],
         where: {
           job_opened: { [Op.between]: [startDate, endDate] },

@@ -46,3 +46,17 @@ export class ShipmentGraphQueryDTO {
     @IsString()
     mode : string
   }
+
+
+
+export class ShipmentGraphQueryDTOFirst {
+    @IsNotEmpty()
+    @Type(() => Date)
+    @IsDate({ message: 'firstDate must be a valid ISO date string' })
+    firstDate: Date;
+  
+    @IsNotEmpty()
+    @Type(() => Date)
+    @IsDate({ message: 'lastDate must be a valid ISO date string' })
+    lastDate: Date;
+  }
