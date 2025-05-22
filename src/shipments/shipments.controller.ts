@@ -15,7 +15,7 @@ export class ShipmentsController {
 
   @Get("/shipmentgraph")
   @ApiQuery({ name : "endDate"} )
-  @ApiQuery({ name : "startDate"} )
+  @ApiQuery({ name : "starDate"} )
   getShipmentGraphData (@Query() query: ShipmentGraphQueryDTO ) : any {
     const {startDate , endDate} = query
 

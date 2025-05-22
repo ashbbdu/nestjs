@@ -10,6 +10,7 @@ import { Shipment } from './shipments/shipment.model';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { ShipmentsModule } from './shipments/shipments.module';
 
 @Module({
   imports: [
@@ -35,7 +36,9 @@ import { APP_GUARD } from '@nestjs/core';
       models: [User, Shipment],
     }),
 
-    UsersModule
+    UsersModule,
+
+    ShipmentsModule
   ],
   controllers: [AppController, ShipmentsController],
   providers: [

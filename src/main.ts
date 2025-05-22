@@ -5,6 +5,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 
+  // First create a Node js application to accept payment and then a nestjs appliaction
+  // Note try to integrate razor pay with this system (Nest Js)
   const app = await NestFactory.create(AppModule , {
     // logger : ['error' , 'warn']
     // logger: new ConsoleLogger({
