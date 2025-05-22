@@ -1,6 +1,7 @@
 import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { ShipmentsService } from './shipments.service';
 import { ShipmentGraphQueryDTO, ShipmentGraphQueryDTOFirst, ShipmentTeusChargeableDTO } from 'src/users/dto/create-users-dto';
+import { ApiQuery } from '@nestjs/swagger';
 
 
 
@@ -13,9 +14,16 @@ export class ShipmentsController {
   }
 
   @Get("/shipmentgraph")
+  @ApiQuery({ name : "endDate"} )
+  @ApiQuery({ name : "startDate"} )
   getShipmentGraphData (@Query() query: ShipmentGraphQueryDTO ) : any {
-    console.log(query, "query");
-    
+    const {startDate , endDate} = query
+
+    return {
+      startDate,
+      endDate,
+      msg : "working fine"
+    }
   } 
 
 

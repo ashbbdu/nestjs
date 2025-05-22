@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 
@@ -19,6 +20,14 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     errorHttpStatusCode: 400
   }));
+  const config = new DocumentBuilder()
+    .setTitle('Cargostar Dashboard')
+    .setDescription('The Cargostar Dashboard API description')
+    .setVersion('1.0')
+    .addTag('Cargostar Dashboard')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
